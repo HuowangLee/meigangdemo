@@ -254,10 +254,10 @@ const route = useRoute()
 
 // 炉次基本信息
 const furnaceId = ref(route.query.id || 'F001')
-const furnaceStatus = ref('吹炼中')
+const furnaceStatus = ref('主吹期')
 const steelType = ref('Q235B')
 const startTime = ref('14:00')
-const estimatedEnd = ref('14:25')
+const estimatedEnd = ref('14:28')
 
 // 时间轴事件
 const timelineEvents = ref([
@@ -266,39 +266,39 @@ const timelineEvents = ref([
     time: '14:00',
     completed: true,
     active: false,
-    details: '铁水120t，废钢15t'
+    details: '铁水120t，废钢15t，石灰2.5t'
   },
   {
     title: '吹炼开始',
-    time: '14:05',
+    time: '14:03',
     completed: true,
     active: false,
-    details: '氧流量8000m³/h'
+    details: '氧流量8500m³/h，枪位1.8m'
   },
   {
     title: '主吹期',
-    time: '14:10',
+    time: '14:08',
     completed: false,
     active: true,
-    details: '当前阶段'
+    details: '当前阶段，脱碳反应剧烈'
   },
   {
     title: '取样',
-    time: '14:20',
-    completed: false,
-    active: false,
-    details: '预计取样时间'
-  },
-  {
-    title: '终点调整',
     time: '14:22',
     completed: false,
     active: false,
-    details: '根据取样结果调整'
+    details: '预计取样时间，检测C、P含量'
+  },
+  {
+    title: '终点调整',
+    time: '14:25',
+    completed: false,
+    active: false,
+    details: '根据取样结果调整温度'
   },
   {
     title: '出钢',
-    time: '14:25',
+    time: '14:28',
     completed: false,
     active: false,
     details: '预计出钢时间'
@@ -306,9 +306,9 @@ const timelineEvents = ref([
 ])
 
 // 实时数据
-const currentTemp = ref(1680)
-const currentCarbon = ref(0.08)
-const currentR = ref(3.2)
+const currentTemp = ref(1675)
+const currentCarbon = ref(0.12)
+const currentR = ref(3.1)
 
 // 目标窗口
 const tempTarget = ref({ min: 1650, max: 1700 })
@@ -317,12 +317,12 @@ const rTarget = ref({ min: 3.0, max: 3.5 })
 
 // AI建议
 const currentSuggestion = ref({
-  title: '建议增加石灰用量',
-  description: '根据当前渣系分析，建议增加石灰用量以提高脱磷效果',
-  content: '石灰 +50kg',
-  expectedEffect: '提高脱磷效率15%',
-  expectedProfit: 1200,
-  confidence: 85
+  title: '建议调整氧流量',
+  description: '根据当前温度趋势，建议降低氧流量避免过吹',
+  content: '氧流量 8500→8000m³/h',
+  expectedEffect: '避免过吹，提高终点命中率',
+  expectedProfit: 1500,
+  confidence: 88
 })
 
 // 倒计时
@@ -331,8 +331,8 @@ const countdownTime = ref(0)
 // 加料向导
 const materialWizardVisible = ref(false)
 const materialForm = reactive({
-  limeStock: 5000,
-  targetR: 3.2,
+  limeStock: 8500,
+  targetR: 3.1,
   constraints: ['lime']
 })
 const materialResult = ref(null)
@@ -348,29 +348,75 @@ function generateTimeLabels() {
   return labels
 }
 
-// 生成各种数据
+// 生成各种数据 - 基于炼钢工艺特点
 function generateTempData() {
-  return Array.from({ length: 20 }, (_, i) => 1650 + Math.sin(i * 0.3) * 30 + Math.random() * 10)
+  // 温度在吹炼过程中逐渐上升，主吹期达到峰值
+  return Array.from({ length: 20 }, (_, i) => {
+    const progress = i / 19
+    let baseTemp = 1650
+    if (progress < 0.3) {
+      // 装料期：温度较低
+      baseTemp = 1650 + progress * 20
+    } else if (progress < 0.8) {
+      // 主吹期：温度快速上升
+      baseTemp = 1660 + (progress - 0.3) * 40
+    } else {
+      // 终点期：温度趋于稳定
+      baseTemp = 1680 + (progress - 0.8) * 10
+    }
+    return Math.round(baseTemp + (Math.random() - 0.5) * 8)
+  })
 }
 
 function generateCarbonData() {
-  return Array.from({ length: 20 }, (_, i) => 0.1 + Math.sin(i * 0.2) * 0.05 + Math.random() * 0.02)
+  // 碳含量在吹炼过程中逐渐降低
+  return Array.from({ length: 20 }, (_, i) => {
+    const progress = i / 19
+    const baseCarbon = 0.4 - progress * 0.35 // 从0.4%降到0.05%
+    return Math.round((baseCarbon + (Math.random() - 0.5) * 0.02) * 1000) / 1000
+  })
 }
 
 function generateRData() {
-  return Array.from({ length: 20 }, (_, i) => 3.0 + Math.sin(i * 0.25) * 0.3 + Math.random() * 0.1)
+  // 渣碱度在吹炼过程中逐渐提高
+  return Array.from({ length: 20 }, (_, i) => {
+    const progress = i / 19
+    const baseR = 2.8 + progress * 0.4 // 从2.8提高到3.2
+    return Math.round((baseR + (Math.random() - 0.5) * 0.1) * 10) / 10
+  })
 }
 
 function generateFeOData() {
-  return Array.from({ length: 20 }, (_, i) => 15 + Math.sin(i * 0.4) * 5 + Math.random() * 2)
+  // FeO含量在吹炼过程中先升后降
+  return Array.from({ length: 20 }, (_, i) => {
+    const progress = i / 19
+    let baseFeO = 12
+    if (progress < 0.6) {
+      // 主吹期：FeO含量较高
+      baseFeO = 12 + progress * 8
+    } else {
+      // 终点期：FeO含量降低
+      baseFeO = 20 - (progress - 0.6) * 5
+    }
+    return Math.round(baseFeO + (Math.random() - 0.5) * 2)
+  })
 }
 
 function generateOxygenData() {
-  return Array.from({ length: 20 }, (_, i) => 8000 + Math.sin(i * 0.15) * 500 + Math.random() * 200)
+  // 氧流量在吹炼过程中保持相对稳定
+  return Array.from({ length: 20 }, (_, i) => {
+    const baseOxygen = 8500
+    return Math.round(baseOxygen + (Math.random() - 0.5) * 300)
+  })
 }
 
 function generateGunPositionData() {
-  return Array.from({ length: 20 }, (_, i) => 1.5 + Math.sin(i * 0.35) * 0.3 + Math.random() * 0.1)
+  // 枪位在吹炼过程中逐渐降低
+  return Array.from({ length: 20 }, (_, i) => {
+    const progress = i / 19
+    const baseGun = 1.8 - progress * 0.3 // 从1.8m降到1.5m
+    return Math.round((baseGun + (Math.random() - 0.5) * 0.1) * 10) / 10
+  })
 }
 
 // 实时曲线图配置
@@ -476,11 +522,16 @@ const showMaterialWizard = () => {
 }
 
 const calculateMaterialPlan = () => {
-  // 模拟AI计算
+  // 基于当前渣碱度和目标值计算所需石灰量
+  const currentR = 3.1
+  const targetR = materialForm.targetR
+  const limeNeeded = Math.round((targetR - currentR) * 200 + 100) // 每提高0.1R需要约200kg石灰
+  const fluoriteNeeded = Math.round(limeNeeded * 0.12) // 萤石用量约为石灰的12%
+  
   materialResult.value = {
-    lime: 120,
-    fluorite: 15,
-    expectedR: 3.2
+    lime: limeNeeded,
+    fluorite: fluoriteNeeded,
+    expectedR: targetR
   }
 }
 
