@@ -19,7 +19,7 @@ export default defineConfig(({ command }) => {
       host: true
     },
     // 生产环境配置
-    base: isDev ? '/' : '/meigangdemo/',
+    base: '/meigangdemo/',
     build: {
       outDir: 'docs',
       assetsDir: 'assets',
