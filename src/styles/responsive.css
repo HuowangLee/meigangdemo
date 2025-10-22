@@ -1,0 +1,555 @@
+/* 响应式设计样式 */
+
+/* 大屏幕 (>= 1200px) */
+@media (min-width: 1200px) {
+  .el-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+}
+
+/* 中等屏幕 (768px - 1199px) */
+@media (max-width: 1199px) {
+  .el-aside {
+    width: 200px !important;
+  }
+  
+  .kpi-cards .el-col {
+    margin-bottom: 15px;
+  }
+  
+  .charts-section .el-col {
+    margin-bottom: 20px;
+  }
+  
+  .furnace-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .furnace-actions {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* 小屏幕 (576px - 767px) */
+@media (max-width: 767px) {
+  .el-aside {
+    width: 60px !important;
+  }
+  
+  .sidebar-menu .el-menu-item span {
+    display: none;
+  }
+  
+  .logo span {
+    display: none;
+  }
+  
+  .logo {
+    justify-content: center;
+  }
+  
+  .header {
+    padding: 0 10px;
+  }
+  
+  .header-left h2 {
+    font-size: 16px;
+  }
+  
+  .dashboard,
+  .furnace-realtime,
+  .ai-suggestions,
+  .analysis,
+  .reports,
+  .settings {
+    padding: 10px;
+  }
+  
+  .filter-bar .el-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .filter-bar .el-col {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .kpi-cards .el-col {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .charts-section .el-col {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .furnace-header {
+    padding: 15px;
+  }
+  
+  .furnace-info h2 {
+    font-size: 18px;
+  }
+  
+  .furnace-details {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .furnace-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .furnace-actions .el-button {
+    width: 100%;
+  }
+  
+  .timeline-section,
+  .realtime-charts,
+  .ai-suggestions-panel,
+  .target-windows {
+    padding: 15px;
+  }
+  
+  .gantt-chart {
+    height: 150px;
+  }
+  
+  .timeline {
+    padding-left: 20px;
+  }
+  
+  .timeline-marker {
+    left: -15px;
+    width: 15px;
+    height: 15px;
+    font-size: 10px;
+  }
+  
+  .suggestion-card {
+    padding: 10px;
+  }
+  
+  .suggestion-actions {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .suggestion-actions .el-button {
+    width: 100%;
+  }
+  
+  .target-item {
+    padding: 10px;
+  }
+  
+  .report-filters .el-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .report-filters .el-col {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .summary-table,
+  .trend-charts,
+  .cost-waterfall,
+  .drill-down-table {
+    padding: 15px;
+  }
+  
+  .table-filters .el-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .table-filters .el-col {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .layout-management .el-row {
+    flex-direction: column;
+  }
+  
+  .layout-management .el-col {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .reconciliation-options {
+    gap: 5px;
+  }
+  
+  .reconciliation-options .el-button {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+  
+  .kpi-config,
+  .cost-config,
+  .model-monitoring,
+  .alert-config,
+  .permission-config,
+  .parameter-changes {
+    padding: 15px;
+  }
+  
+  .model-monitoring .el-row {
+    flex-direction: column;
+  }
+  
+  .model-monitoring .el-col {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .permission-config .el-row {
+    flex-direction: column;
+  }
+  
+  .permission-config .el-col {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .permission-category {
+    margin-bottom: 10px;
+  }
+  
+  .permission-category .el-checkbox {
+    margin-right: 10px;
+    margin-bottom: 5px;
+  }
+}
+
+/* 超小屏幕 (< 576px) */
+@media (max-width: 575px) {
+  .el-aside {
+    width: 50px !important;
+  }
+  
+  .sidebar-menu .el-menu-item {
+    padding: 0 10px;
+  }
+  
+  .sidebar-menu .el-menu-item .el-icon {
+    font-size: 16px;
+  }
+  
+  .header {
+    padding: 0 5px;
+  }
+  
+  .header-left h2 {
+    font-size: 14px;
+  }
+  
+  .user-info {
+    font-size: 12px;
+  }
+  
+  .dashboard,
+  .furnace-realtime,
+  .ai-suggestions,
+  .analysis,
+  .reports,
+  .settings {
+    padding: 5px;
+  }
+  
+  .filter-bar,
+  .report-filters,
+  .table-filters {
+    padding: 10px;
+  }
+  
+  .kpi-cards,
+  .charts-section,
+  .summary-table,
+  .trend-charts,
+  .cost-waterfall,
+  .drill-down-table,
+  .layout-management {
+    padding: 10px;
+  }
+  
+  .furnace-header {
+    padding: 10px;
+  }
+  
+  .furnace-info h2 {
+    font-size: 16px;
+  }
+  
+  .furnace-details {
+    font-size: 12px;
+  }
+  
+  .furnace-actions .el-button {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+  
+  .timeline-section,
+  .realtime-charts,
+  .ai-suggestions-panel,
+  .target-windows {
+    padding: 10px;
+  }
+  
+  .gantt-chart {
+    height: 120px;
+  }
+  
+  .timeline {
+    padding-left: 15px;
+  }
+  
+  .timeline-marker {
+    left: -12px;
+    width: 12px;
+    height: 12px;
+    font-size: 8px;
+  }
+  
+  .event-title {
+    font-size: 12px;
+  }
+  
+  .event-time {
+    font-size: 10px;
+  }
+  
+  .event-details {
+    font-size: 10px;
+  }
+  
+  .suggestion-card {
+    padding: 8px;
+  }
+  
+  .suggestion-header {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .suggestion-title {
+    font-size: 14px;
+  }
+  
+  .suggestion-content p {
+    font-size: 12px;
+  }
+  
+  .suggestion-details {
+    padding: 8px;
+  }
+  
+  .detail-item {
+    font-size: 12px;
+  }
+  
+  .target-item {
+    padding: 8px;
+  }
+  
+  .target-label {
+    font-size: 12px;
+  }
+  
+  .target-range {
+    font-size: 11px;
+  }
+  
+  .current-value {
+    font-size: 11px;
+  }
+  
+  .furnace-card {
+    padding: 10px;
+  }
+  
+  .furnace-header {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .furnace-id {
+    font-size: 14px;
+  }
+  
+  .furnace-content {
+    font-size: 11px;
+  }
+  
+  .stage-info,
+  .prediction-info,
+  .risk-indicator {
+    margin-bottom: 3px;
+  }
+  
+  .chart-container h3 {
+    font-size: 14px;
+  }
+  
+  .el-table {
+    font-size: 12px;
+  }
+  
+  .el-table .el-table__cell {
+    padding: 8px 4px;
+  }
+  
+  .el-button {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+  
+  .el-form-item__label {
+    font-size: 12px;
+  }
+  
+  .el-input__inner {
+    font-size: 12px;
+  }
+  
+  .el-select .el-input__inner {
+    font-size: 12px;
+  }
+  
+  .el-tag {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+  
+  .el-progress__text {
+    font-size: 10px;
+  }
+  
+  .el-descriptions__label {
+    font-size: 12px;
+  }
+  
+  .el-descriptions__content {
+    font-size: 12px;
+  }
+  
+  .layout-item {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .layout-info {
+    text-align: center;
+  }
+  
+  .layout-actions {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .reconciliation-card {
+    padding: 10px;
+  }
+  
+  .card-header h4 {
+    font-size: 14px;
+  }
+  
+  .metric {
+    font-size: 12px;
+  }
+  
+  .improvement {
+    font-size: 10px;
+  }
+}
+
+/* 打印样式 */
+@media print {
+  .el-aside,
+  .header,
+  .filter-bar,
+  .report-filters,
+  .table-filters,
+  .layout-management {
+    display: none !important;
+  }
+  
+  .el-main {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .dashboard,
+  .furnace-realtime,
+  .ai-suggestions,
+  .analysis,
+  .reports,
+  .settings {
+    padding: 0 !important;
+  }
+  
+  .kpi-cards,
+  .charts-section,
+  .summary-table,
+  .trend-charts,
+  .cost-waterfall,
+  .drill-down-table {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  
+  .el-table {
+    font-size: 10px;
+  }
+  
+  .el-table .el-table__cell {
+    padding: 4px 2px;
+  }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+  .kpi-card {
+    border: 2px solid #000;
+  }
+  
+  .chart-container {
+    border: 1px solid #000;
+  }
+  
+  .el-table {
+    border: 1px solid #000;
+  }
+  
+  .el-button {
+    border: 1px solid #000;
+  }
+}
+
+/* 减少动画模式 */
+@media (prefers-reduced-motion: reduce) {
+  .timeline-item.active .timeline-marker {
+    animation: none;
+  }
+  
+  .kpi-card:hover {
+    transform: none;
+  }
+  
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
