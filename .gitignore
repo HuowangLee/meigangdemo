@@ -1,11 +1,12 @@
 # 依赖
 node_modules/
 npm-debug.log*
+
 yarn-debug.log*
 yarn-error.log*
 
-# 构建输出
-dist/
+# 构建输出 - 注释掉，因为我们要上传构建文件
+# dist/
 
 # 环境变量
 .env
